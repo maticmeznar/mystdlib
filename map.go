@@ -1,13 +1,7 @@
 package mystdlib
 
-// MapKeyExists returns true if the map key exists. False otherwise.
-// Currently broken
-func MapKeyExists(m interface{}, key interface{}) bool {
-	m1 := m.(map[interface{}]interface{})
-	_, ok := m1[key]
-	if !ok {
-		return false
-	} else {
-		return true
-	}
+// MapKeyExists returns true if the map key exists. False otherwise. Implemented using generics.
+func MapKeyExists[K comparable, V any](m map[K]V, key K) bool {
+	_, ok := m[key]
+	return ok
 }

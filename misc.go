@@ -3,22 +3,11 @@ package mystdlib
 import (
 	"errors"
 	"math/rand"
-
-	"github.com/google/uuid"
 )
 
 // RandomInt returns a random number between min and max
 func RandomInt(min, max int) int {
 	return rand.Intn(max-min) + min
-}
-
-// MustUUIDFromString returns UUID based on its string representation. Panics if `s` cannot be parsed! Deprecated, use uuid.MustParse.
-func MustUUIDFromString(s string) uuid.UUID {
-	u, err := uuid.Parse(s)
-	if err != nil {
-		panic(err)
-	}
-	return u
 }
 
 // PanicIfErr panics if e is not nil
@@ -30,6 +19,11 @@ func PanicIfErr(e error) {
 
 // IsStringInSlice returns true if `needle` is in `haystack`
 func IsStringInSlice(needle string, haystack []string) bool {
+	return IsInSlice(needle, haystack)
+}
+
+// IsInSlice returns true if `needle` is in `haystack`. Implemented with generics.
+func IsInSlice[T comparable](needle T, haystack []T) bool {
 	for _, v := range haystack {
 		if needle == v {
 			return true
@@ -39,7 +33,7 @@ func IsStringInSlice(needle string, haystack []string) bool {
 	return false
 }
 
-func Trim(input string, maxLen int, trimSuffix string) (string, error) {
+func TrimString(input string, maxLen int, trimSuffix string) (string, error) {
 	inputLen := len(input)
 	suffixLen := len(trimSuffix)
 
@@ -52,8 +46,4 @@ func Trim(input string, maxLen int, trimSuffix string) (string, error) {
 	}
 
 	return input[:maxLen-suffixLen] + trimSuffix, nil
-}
-
-func Test() string {
-	return "hello"
 }

@@ -53,3 +53,7 @@ func Trim(input string, maxLen int, trimSuffix string) (string, error) {
 
 	return input[:maxLen-suffixLen] + trimSuffix, nil
 }
+
+func Test() string {
+	return "hello"
+}

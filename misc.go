@@ -1,7 +1,6 @@
 package mystdlib
 
 import (
-	"errors"
 	"math/rand"
 )
 
@@ -33,17 +32,18 @@ func IsInSlice[T comparable](needle T, haystack []T) bool {
 	return false
 }
 
-func TrimString(input string, maxLen int, trimSuffix string) (string, error) {
+// Will panic if `trimSuffix` is longer than `maxLen`.
+func TrimString(input string, maxLen int, trimSuffix string) string {
 	inputLen := len(input)
 	suffixLen := len(trimSuffix)
 
 	if inputLen <= maxLen {
-		return input, nil
+		return input
 	}
 
 	if suffixLen > maxLen {
-		return "", errors.New("trimSuffix length must not be longer than maxLen")
+		panic("trimSuffix length must not be longer than maxLen")
 	}
 
-	return input[:maxLen-suffixLen] + trimSuffix, nil
+	return input[:maxLen-suffixLen] + trimSuffix
 }
